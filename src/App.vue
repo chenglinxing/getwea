@@ -1,18 +1,5 @@
 <template>
   <div id="app">
-    <h1>{{ $store.state.counter }}</h1>
-    <h2>{{ $store.state.students }}</h2>
-    <h2>{{ $store.getters.powerCounter }}</h2>
-    <h3>{{ $store.getters.morefifteen }}</h3>
-    <h2>--------------------</h2>
-    <h3>{{ $store.state.info }}</h3>
-    <h4>{{ $store.getters.test(16) }}</h4>
-    <button @click="updateInfo">修改信息</button>
-    <button @click="ad()">+</button>
-    <button @click="su()">-</button>
-    <button @click="addCount(5)">+5</button>
-    <button @click="addCount(10)">+10</button>
-    <button @click="addStudents">添加学生</button>
     <router-view></router-view>
   </div>
 </template>
