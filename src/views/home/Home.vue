@@ -1,5 +1,6 @@
 <template>
   <div class="home" ref="home" :style="{'backgroundImage':'url('+getWeaImg+')'}">
+    <!-- <h2>{{$store.state.cityName}}</h2> -->
     <home-header
       class="home-header"
       :showCity="showCity"
@@ -24,6 +25,9 @@
       <!-- <h1>{{item}}</h1> -->
     </div>
     <home-footer class="home-footer" />
+    <transition name="fade">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
@@ -44,7 +48,7 @@ export default {
       appsecret: "5dyU8a0q ",
       version: "v9",
       cityid: "0",
-      city: "上海",
+      city: this.$store.state.cityName,
       ip: "0",
       callback: "0",
 
@@ -109,58 +113,60 @@ export default {
         ip: this.ip,
         callback: this.callback
       }
-    }).then(res => {
-      console.log(res.data);
-      //显示城市
-      this.showCity = res.data.city;
-      //当天的空气质量
-      //console.log(typeof res.data.aqi.no2);
-      //console.log(res.data.aqi.no2);
-      this.currentAirQuality = res.data.aqi.air;
-      //获取当天的空气指标
-      this.currentPMten = res.data.aqi.pm10;
-      this.currentPMtf = res.data.aqi.pm25;
-      this.currentNOtwo = res.data.aqi.no2;
-      this.currentSOtwo = res.data.aqi.so2;
-      this.currentOthree = res.data.aqi.o3;
+    })
+      // this.$store.dispatch("toggleCity")
+      .then(res => {
+        console.log(res.data);
+        //显示城市
+        this.showCity = res.data.city;
+        //当天的空气质量
+        //console.log(typeof res.data.aqi.no2);
+        //console.log(res.data.aqi.no2);
+        this.currentAirQuality = res.data.aqi.air;
+        //获取当天的空气指标
+        this.currentPMten = res.data.aqi.pm10;
+        this.currentPMtf = res.data.aqi.pm25;
+        this.currentNOtwo = res.data.aqi.no2;
+        this.currentSOtwo = res.data.aqi.so2;
+        this.currentOthree = res.data.aqi.o3;
 
-      //显示当天温度
-      //获取当前年月日
-      let date = new Date();
-      let year = date.getFullYear();
-      let month = date.getMonth() + 1;
-      let day = date.getDate();
-      let M = month < 10 ? "0" + month : month;
-      let D = day < 10 ? "0" + day : day;
-      let currentday = year + "-" + M + "-" + D;
-      //赋值更新时间
-      this.update_time = res.data.update_time;
-      //赋值当前时间
-      let datas = res.data.data;
-      this.weekWea = datas;
-      //只取当天的数据
-      for (let i in datas) {
-        if (currentday == datas[i].date) {
-          let list = datas[i];
-          //console.log(list);
-          this.datalists = list;
-          //获取当天温度
-          this.showTep = datas[i].tem;
-          //获取当天最高温度
-          this.showTepHigh = datas[i].tem1;
-          //获取当天最低温度
-          this.showTepMin = datas[i].tem2;
-          //获取当天的天气
-          this.showWea = datas[i].wea;
-          //获取wea_day_img  通过这个动态决定背景图片
-          this.weaStatus = datas[i].wea_day_img;
-          //console.log(datas[i].wea_day_img);
-          //获取当天空气状态
-          this.showAiLlevel = datas[i].air_level;
-          this.currentHours = datas[i].hours;
+        //显示当天温度
+        //获取当前年月日
+        let date = new Date();
+        let year = date.getFullYear();
+        let month = date.getMonth() + 1;
+        let day = date.getDate();
+        let M = month < 10 ? "0" + month : month;
+        let D = day < 10 ? "0" + day : day;
+        let currentday = year + "-" + M + "-" + D;
+        //赋值更新时间
+        this.update_time = res.data.update_time;
+        //赋值当前时间
+        let datas = res.data.data;
+        this.weekWea = datas;
+        //只取当天的数据
+        for (let i in datas) {
+          if (currentday == datas[i].date) {
+            let list = datas[i];
+            //console.log(list);
+            this.datalists = list;
+            //获取当天温度
+            this.showTep = datas[i].tem;
+            //获取当天最高温度
+            this.showTepHigh = datas[i].tem1;
+            //获取当天最低温度
+            this.showTepMin = datas[i].tem2;
+            //获取当天的天气
+            this.showWea = datas[i].wea;
+            //获取wea_day_img  通过这个动态决定背景图片
+            this.weaStatus = datas[i].wea_day_img;
+            //console.log(datas[i].wea_day_img);
+            //获取当天空气状态
+            this.showAiLlevel = datas[i].air_level;
+            this.currentHours = datas[i].hours;
+          }
         }
-      }
-    });
+      });
   },
   methods: {},
   computed: {
@@ -168,6 +174,9 @@ export default {
     getWeaImg() {
       let status = this.weaStatus; //yu
       return this.WeaImg[status];
+    },
+    city() {
+      return this.$store.state.cityName;
     }
   }
 };
@@ -188,5 +197,15 @@ export default {
 
 .home-header {
   height: 250px;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.5s;
+}
+
+.fade-enter,
+.fade-leave-to {
+  transform: translate(100%, 0, 0);
 }
 </style>

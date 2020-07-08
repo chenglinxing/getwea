@@ -35,4 +35,7 @@ export default {
     //   state.info.id = 2;
     // }, 1500);
   },
+  showCityName(state, name) {
+    state.cityName = name;
+  },
 };

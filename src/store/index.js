@@ -18,6 +18,8 @@ const store = new Vuex.Store({
       { id: "D", age: 20 },
     ],
     info: { id: 1, age: 10, height: 1.78 },
+    cityName: "上海",
+    // defaultCityName: "上海",
   },
   mutations,
   getters,
