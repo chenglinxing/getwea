@@ -39,7 +39,7 @@
     <div class="home-header-bottom">
       <span class="bottom-item">中国天气</span>
       <span class="bottom-item">
-        <van-loading type="spinner" size="14px" style="display:inline;margin-left:190px;" />
+        <van-loading type="spinner" size="14px" style="display:inline;margin-left:195px;" />
       </span>
       <span class="bottom-item">正在刷新</span>
     </div>
@@ -94,7 +94,7 @@ export default {
   methods: {
     isChoose() {
       this.isActive = !this.isActive;
-      console.log(this.$route.path);
+      //console.log(this.$route.path);
     },
     //点击管理城市 显示城市界面
     isShowCity() {

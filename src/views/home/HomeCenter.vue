@@ -2,11 +2,13 @@
   <div class="home-center">
     <div class="center-show">
       <!-- 显示当天每小时的天气 -->
+      <!-- <h2 style="color:red">{{getWeekImg}}</h2> -->
       <div class="show-wea">
-        <div class="wea-item" v-for="(item,index) in currentHours" :key="index">
+        <div class="wea-item" v-for="(item,index) in getHourImg" :key="index">
           <div class="item-wea">{{item.hours}}</div>
           <div class="item-wea">
-            <i class="icon iconfont icon-tianqi-yu"></i>
+            <!-- <i class="icon iconfont icon-tianqi-yu"></i> -->
+            <i :class="item.hourImg"></i>
           </div>
           <div class="item-wea">{{item.tem}}°C</div>
         </div>
@@ -14,10 +16,11 @@
 
       <!-- 显示近7天的天气数据 -->
       <div class="show-week">
-        <div class="show-week-wea" v-for="(item,index) in weekWea" :key="index">
+        <div class="show-week-wea" v-for="(item,index) in getWeekImg" :key="index">
           <span class="week-wea-item">{{getMonth}}{{item.day}}</span>
           <span class="week-wea-item">
-            <i class="icon iconfont icon-tianqi-yu"></i>
+            <!-- <i class="icon iconfont icon-tianqi-yu"></i> -->
+            <i :class="item.weekImg"></i>
           </span>
           <span class="week-wea-item">
             <span style="padding-right:5px">{{item.tem1}}&degc</span>
@@ -113,7 +116,7 @@
                   </li>
                   <li class="li-describle">
                     <span>紫外线指数：</span>
-                    <span>2 最弱</span>
+                    <span>最弱</span>
                   </li>
                 </ul>
               </div>
@@ -166,7 +169,19 @@ export default {
       rate: 50,
       speed: 0,
       currentRate: 50,
-      currentMonth: "" //当前月份
+      currentMonth: "", //当前月份
+      hourImg: {
+        yun: "icon iconfont icon-tianqi-yin",
+        yu: "icon iconfont icon-tianqi-yu",
+        xue: "icon iconfont icon-tianqi-xue",
+        lei: "icon iconfont icon-tianqi-leizhenyu",
+        bingbao: "icon iconfont icon-tianqi-leiyubingbao",
+        yin: "icon iconfont icon-tianqi-yin",
+        qing: "icon iconfont icon-tianqi-qing",
+        wu: "icon iconfont icon-tianqi-wu"
+      },
+      hourimg: [], //每小时的天气图片
+      weekimg: [] //每周的天气图片
     };
   },
   components: {
@@ -184,6 +199,23 @@ export default {
 
     getCurrentRate() {
       return Number(this.currentAirQuality);
+    },
+    //获取小时的天气图片
+    getHourImg() {
+      let hourStatus = this.currentHours;
+      for (let i = 0; i < this.currentHours.length; i++) {
+        this.currentHours[i].hourImg = this.hourImg[hourStatus[i].wea_img];
+      }
+      return hourStatus;
+    },
+
+    //获取每周的天气图片
+    getWeekImg() {
+      let weekStatus = this.weekWea;
+      for (let i = 0; i < this.weekWea.length; i++) {
+        this.weekWea[i].weekImg = this.hourImg[weekStatus[i].wea_day_img];
+      }
+      return weekStatus;
     }
   },
   mounted() {
