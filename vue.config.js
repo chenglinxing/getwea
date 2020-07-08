@@ -1,13 +1,15 @@
 module.exports = {
   publicPath: "./",
-  configureWebpack: {
-    resolve: {
-      alias: {
-        assets: "@/assets",
-        common: "@/common",
-        components: "@/components",
-        network: "@/network",
-      },
-    },
-  },
+  // devServer: {
+  //   proxy: {
+  //     "/api": {
+  //       target: "http://api.map.baidu.com", //对应自己的接口
+  //       changeOrigin: true,
+  //       ws: true,
+  //       pathRewrite: {
+  //         "/api": "/api",
+  //       },
+  //     },
+  //   },
+  // },
 };
