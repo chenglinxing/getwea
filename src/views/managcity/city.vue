@@ -4,7 +4,7 @@
       <!-- <slot name="left">
        
       </slot>-->
-      
+      <!-- <h1 style="color:red">{{$store.state.cityName}}</h1> -->
       <!-- <h2>{{d}}</h2>-->
       <form action="/">
         <van-search

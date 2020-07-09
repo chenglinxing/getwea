@@ -1,15 +1,17 @@
 module.exports = {
   publicPath: "./",
-  // devServer: {
-  //   proxy: {
-  //     "/api": {
-  //       target: "http://api.map.baidu.com", //对应自己的接口
-  //       changeOrigin: true,
-  //       ws: true,
-  //       pathRewrite: {
-  //         "/api": "/api",
-  //       },
-  //     },
-  //   },
-  // },
+  configureWebpack: {
+    resolve: {
+      alias: {
+        assets: "@/assets",
+        common: "@/common",
+        components: "@/components",
+        network: "@/network",
+      },
+    },
+  },
+  chainWebpack(config) {
+    // 在chainWebpack中添加下面的代码
+    config.entry("main").add("babel-polyfill"); // main是入口js文件
+  },
 };
